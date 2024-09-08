@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOVIE CONNECTS App</title>
+  <!-- bootstrap cdn -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- angular cdn -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <!-- my script -->
+  <script>
+    var app = angular.module('MOVIECONNECTS', []);
+    app.controller('cntr6', function($scope) {
+      $scope.movies = [];
+      $scope.newMovie = '';
+
+      $scope.addMovie = function() {
+        if ($scope.newMovie) {
+          $scope.movies.push({ name: $scope.newMovie, editing: false });
+          $scope.newMovie = '';
+        }
+      };
+
+      $scope.editMovie = function(movie) {
+        movie.editing = true;
+      };
+
+      $scope.deleteMovie = function(movie) {
+        var index = $scope.movies.indexOf(movie);
+        if (index !== -1) {
+          $scope.movies.splice(index, 1);
+        }
+      };
+    });
+  </script>
+  <!-- my stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div ng-app="MOVIECONNECTS" ng-controller="cntr6" class="container">
+    <h2 class="text-center mt-5">MOVIE CONNECTS - Movies watch List</h2>
+    <div class="row mt-5">
+      <div class="col-md-6 offset-md-3">
+        <form ng-submit="addMovie()">
+          <div class="input-group">
+            <input type="text" ng-model="newMovie" class="form-control" placeholder="Add new Movie" required>
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-primary">Add Movies</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <table class="table table-striped mt-5">
+      <thead>
+        <tr>
+          <th>Movies</th>
+          <th>Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="movie in movies">
+          <td>
+            <span ng-if="!movie.editing">{{ movie.name }}</span>
+            <input type="text" ng-model="movie.name" ng-if="movie.editing" class="form-control">
+          </td>
+          <td>
+            <button ng-click="editMovie(movie)" class="btn btn-warning">Edit</button>
+            <button ng-click="deleteMovie(movie)" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <head>
+    <style>
+      body {
+    font-family: 'Poppins', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    background: url('https://www.hhpl.ca/en/resourcesGeneral/Feature-Banners/Youth-and-Family-Movie-Night.jpg');
+    background-size: 100%;
+    background-position: 25% 60%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px 100px
+      }
+    </style>
+  </head>
+</body>
+</html>
